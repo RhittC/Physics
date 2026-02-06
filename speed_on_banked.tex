@@ -25,8 +25,6 @@ So he has a crazy idea: why not become a physicist and research stunt mechanics?
 
 Who knows, maybe a strong understanding will lay the foundations for a future NASCAR training business $\dots$
 
-\vspace{9 mm}
-
 Note to self: learn simulink and experiment further with simulations
 
 \section{The Basics of Friction -- Walking}
@@ -39,7 +37,9 @@ Note to self: learn simulink and experiment further with simulations
 The first constraint is that the car travels in a purely horizontal plane 
   i.e. there is no vertical movement and so net vertical force on the car is $\vec{0}$.
 
-For ease of calculation, we deal with both friction down the slope and up the slope together using $(\pm)$ for its components, taking care to use $(\mp)$ where appropriate to maintain consistency of signs. Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in ($\mp$)) is for friction down the slope and vice versa.
+For ease of calculation, we deal with both friction down the slope (\textbf{Case 1}) and up the slope (\textbf{Case 2}) at once using ($\pm$) and ($\mp$).
+
+Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in ($\mp$)) is for Case 1 and the sign on bottom for Case 2.
 
 \begin{figure}[h]
 \centering
@@ -47,16 +47,16 @@ For ease of calculation, we deal with both friction down the slope and up the sl
     \pgfmathsetmacro{\radius}{2}
     \pgfmathsetmacro{\g}{9.81}
     \pgfmathsetmacro{\mass}{0.1}
-    \pgfmathsetmacro{\incline}{45}
+    \pgfmathsetmacro{\incline}{atan(3/4)}
     \pgfmathsetmacro{\fric}{0.3}
     \pgfmathsetmacro{\speed}{sqrt(\radius * \g * (  (tan(\incline)+\fric)/(1-\fric*tan(\incline))  ))}
 
-    \draw (0, 0) -- (3, 0) -- (3, 3);
-    \draw (3, 3) -- (0, 0) node[midway, above, sloped, draw, fill=blue!20, minimum size=10pt] (c) {};
+    \draw (0, 0) -- (4, 0) -- (4, 3);
+    \draw (4, 3) -- (0, 0) node[midway, above, sloped, draw, fill=blue!20, minimum size=10pt] (c) {};
 
 
-    \draw[dashed, ->] (5, 1) -- (5, 1.5) node[above, font=\tiny] {$(+)\text{ve }y$};
-    \draw[dashed, ->] (5, 1) -- (4.5, 1) node[left, font=\tiny] {$(+)\text{ve }x$};
+    \draw[dashed, ->] (6, 1) -- (6, 1.5) node[above, font=\tiny] {$(+)\text{ve }y$};
+    \draw[dashed, ->] (6, 1) -- (5.5, 1) node[left, font=\tiny] {$(+)\text{ve }x$};
 
 
     
@@ -77,9 +77,10 @@ For ease of calculation, we deal with both friction down the slope and up the sl
         (c.south) -- ++({\Ff*cos(\incline+180)},{\Ff*sin(\incline+180)})
         node[left] {$\vec F_f$};
 \end{tikzpicture}
-\caption{Toy Car on banked track with $m=0.1$, $r=2$, $\theta=45^\circ$, $\mu=0.3$, $g=9.81$ SI units}
+\caption{Toy Car on banked track with $m=0.1$, $r=2$, $\theta=\arctan\left(\frac{3}{4}\right)$, $\mu=0.3$, $g=9.81$ SI units}
 \end{figure}
 
+\pagebreak
 
 
 Setting the upwards direction as positive, we have the following:
