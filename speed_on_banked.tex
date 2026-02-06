@@ -73,9 +73,9 @@ This gives us the normal force! Now, plugging into (E1), we find the friction fo
 
 \begin{align*}
     \text{(E5)}\rightarrow\text{(E1)}\implies\quad\quad
-        \vec{0}&=-mg \mp |F_f|\sin\theta + \left(mg\cos\theta + m\frac{v^2}{r}\sin\theta\right)\cos\theta \\
-        \pm |F_f|\sin\theta  &= m\frac{v^2}{r}\sin\theta\cos\theta + mg (-1+\cos^2 \theta) \\
-                             &= m\frac{v^2}{r}\sin\theta\cos\theta + mg (-\sin^2\theta) \\
+        \vec{0}&=-mg \mp |F_f|\sin\theta + m\left(g\cos\theta + \frac{v^2}{r}\sin\theta\right)\cos\theta \\
+        \pm |F_f|\sin\theta  &= m\left(\frac{v^2}{r}\sin\theta\cos\theta + g (-1+\cos^2 \theta)\right) \\
+                             &= m\left(\frac{v^2}{r}\sin\theta\cos\theta + g (-\sin^2\theta)\right) \\
         |F_f| &= \pm m\left(\frac{v^2}{r} \cos\theta - g\sin\theta\right)
 \end{align*}
 
@@ -91,7 +91,7 @@ where the ($+$) for the ($\pm$) in $|F_f|$ is when directed down the slope and t
 
 \subsection{Deriving Range of Speeds}
 
-We now wish to find the maximum value of $|v|$ that meets our constraints for horizontal circular motion. This occurs when $F_f$ is at its maximum down the slope (i.e. ($\pm$) replaced with ($+$)), as this means $F_f$ and $F_N$ both have maximal centre-seeking components and thus contribute as much as possible to the centripetal force. Hence, we have:
+We now wish to find the maximum value of $|v|$ that meets our constraints for horizontal circular motion. This occurs when $F_f$ is at its maximum down the slope (i.e. ($\pm$) replaced with ($+$)), as this means $F_f$ has a maximal centre-seeking component, and so does $F_N$ as it increases to balance out both friction and gravity. Thus, they both contribute as much as possible to the centripetal force. Hence, we have:
 
 \begin{align*}
 |F_f|_{(+)} &\le \mu |F_N|\\
@@ -105,7 +105,9 @@ m\left(\frac{v^2}{r}\cos\theta - g \sin\theta\right)
 |v|&\le \sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)}
 \end{align*}
 
-Similarly, to minimise $|v|$, we want $F_f$ to be maximally directed up the slope (i.e. replace ($\pm$) with ($-$)). This minimises $F_N$ and also leads to a maximal component of $F_f$ that is centre-opposing, thereby minimising centripetal force.
+Similarly, to minimise $|v|$, we want $F_f$ to be maximally directed up the slope (i.e. replace ($\pm$) with ($-$)). 
+The primary reason is that this leads to a maximal component away from the center of the velodrome. The vertical component also ``lessens the burden'' of $F_N$ in opposing the constant $F_g$ downwards, and thereby weakens $F_N$ alongside its center-seeking component to a min.
+Both consequences minimise centripetal force and thus speed as required.
 
 Thus,
 
@@ -119,7 +121,8 @@ Thus,
 \sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)}
 \end{align*}
 
-Therefore the full range of speeds for which static friction and the normal force can ensure horizontal circular motion is summarised as
+Therefore, as static friction can take any magnitude up to the threshold necessary to maintain our first constraint,
+we have the full range of speeds for which static friction and the normal force can work to ensure there is horizontal circular motion:
 
 \begin{center}\boxed{\sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)} \le
 |v| \le
