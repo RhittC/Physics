@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage[margin=1in]{geometry}
+
+
+\title{Cars 4 -- Lightnight McQuation}
+\author{Rhitt C}
+\date{Feb 2026}
+
+
+\begin{document}
+\maketitle
+
+\section*{Abstract}
+Lightning McQueen, old and rusty, decides to officially retire from the racing scene, leaving Cruz to carry on his legacy.
+
+In search of a new career, he thinks back to all the crazy stunts he'd pulled over the years and realises he has no idea how they were even possible physically.
+So he has a crazy idea: why not become a physicist and research stunt mechanics?
+
+Who knows, maybe a strong understanding will lay the foundations for a future NASCAR training business $\dots$
+
+\vspace{9 mm}
+
+Note to self: learn simulink and experiment further with simulations
+
+\section{The Basics of Friction -- Walking}
+
+\section{First Paradigm -- Skidding and Drifting}
+
+\section{Second Paradigm -- Banked Tracks}
+
+\subsection{Deriving a general formula for Friction and Normal forces}
+The first constraint is that the car travels in a purely horizontal plane 
+  i.e. there is no vertical movement and so net vertical force on the car is $\vec{0}$.
+
+For ease of calculation, we deal with both friction down the slope and up the slope together using $(\pm)$ for its components, taking care to use $(\mp)$ where appropriate to maintain consistency of signs.
+
+Setting the upwards direction as positive, we have the following:
+\begin{align*}
+    \sum \vec{F}_y &= \vec{0} \\
+    \vec{0}&=\vec{F_g} + \vec{F}_{fy} + \vec{F}_{Ny} \\
+    \vec{0}&=-mg \mp |F_f|\sin\theta + |F_N|\cos\theta \tag{E1}\\
+    (\text{E1})\cdot \cos\theta\implies\qquad\qquad 
+        \vec{0} &=-mg\cos\theta \mp |F_f|\sin\theta\cos\theta + |F_N|\cos^2\theta \tag{E2}\\
+\end{align*}
+
+
+The second constraint is that the car undergoes uniform circular motion.
+
+Setting the direction in towards the center of the velodrome to be positive, we must have positive centripetal force and hence:
+\begin{align*}
+    \sum \vec{F}_x &= +\; m\frac{v^2}{r} \\
+    \vec{F}_{fx} + \vec{F}_{Nx}&=m\frac{v^2}{r} \\
+    \vec{0}&= m\frac{v^2}{r} - \vec{F}_{fx} - \vec{F}_{Nx} \\
+    \vec{0}&= m\frac{v^2}{r} \mp |F_f|\cos\theta - |F_N|\sin\theta \tag{E3}\\
+    (\text{E3})\cdot \sin\theta\implies\qquad\qquad 
+        \vec{0}&= m\frac{v^2}{r}\sin\theta \mp |F_f|\sin\theta\cos\theta - |F_N|\sin^2\theta \tag{E4}\\
+\end{align*}
+
+
+Now we combine to obtain an equation involving $F_f$ but not $F_N$
+
+\begin{align*}
+    \text{(E4)} - \text{(E2)} \implies \qquad
+        \vec{0}-\vec{0}  &=  m\frac{v^2}{r}\sin\theta + mg\cos\theta + (\vec{0}) + |F_N|\cdot (-\sin^2\theta - \cos^2\theta) \\ 
+        \vec{0} &= m\frac{v^2}{r}\sin\theta + mg\cos\theta + |F_N|\cdot(-1) \\ 
+        |F_N| &= m \left(\frac{v^2}{r} \sin\theta + g\cos\theta \right) \tag{E5}
+\end{align*}
+
+
+This gives us the normal force! Now, plugging into (E1), we find the friction force
+
+\begin{align*}
+    \text{(E5)}\rightarrow\text{(E1)}\implies\quad\quad
+        \vec{0}&=-mg \mp |F_f|\sin\theta + \left(mg\cos\theta + m\frac{v^2}{r}\sin\theta\right)\cos\theta \\
+        \pm |F_f|\sin\theta  &= m\frac{v^2}{r}\sin\theta\cos\theta + mg (-1+\cos^2 \theta) \\
+                             &= m\frac{v^2}{r}\sin\theta\cos\theta + mg (-\sin^2\theta) \\
+        |F_f| &= \pm m\left(\frac{v^2}{r} \cos\theta - g\sin\theta\right)
+\end{align*}
+
+
+Summarising our results thus far, we have,
+
+\begin{center}
+\boxed{|F_f| = \pm m\left( \frac{v^2}{r} \cos\theta - g\sin\theta\right)\qquad\text{and}\qquad |F_N| = m\left(\frac{v^2}{r}\sin\theta + g\cos\theta\right)}
+
+\end{center}
+
+where the ($+$) for the ($\pm$) in $|F_f|$ is when directed down the slope and the ($-$) is when up the slope.
+
+\subsection{Deriving Range of Speeds}
+
+We now wish to find the maximum value of $|v|$ that meets our constraints for horizontal circular motion. This occurs when $F_f$ is at its maximum down the slope (i.e. ($\pm$) replaced with ($+$)), as this means $F_f$ and $F_N$ both have maximal centre-seeking components and thus contribute as much as possible to the centripetal force. Hence, we have:
+
+\begin{align*}
+|F_f|_{(+)} &\le \mu |F_N|\\
+m\left(\frac{v^2}{r}\cos\theta - g \sin\theta\right)
+&\le \mu m \left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
+\frac{v^2}{r}\cos\theta - g \sin\theta
+&\le \mu  \left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
+\frac{v^2}{r}\left(\cos\theta - \mu\sin\theta\right)
+&\le g (\sin\theta + \mu\cos\theta)\\
+\frac{v^2}{r}&\le g\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\\
+|v|&\le \sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)}
+\end{align*}
+
+Similarly, to minimise $|v|$, we want $F_f$ to be maximally directed up the slope (i.e. replace ($\pm$) with ($-$)). This minimises $F_N$ and also leads to a maximal component of $F_f$ that is centre-opposing, thereby minimising centripetal force.
+
+Thus,
+
+\begin{align*}
+|F_f|_{(-)} &\le -\mu |F_N|\\
+-m\left(\frac{v^2}{r}\cos\theta - g \sin\theta\right)
+    &\le \mu m\left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
+\frac{v^2}{r} \left(\cos\theta + \mu\sin\theta\right)
+&\ge  g (\sin\theta - \mu\cos\theta)\\
+|v| &\ge
+\sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)}
+\end{align*}
+
+Therefore the full range of speeds for which static friction and the normal force can ensure horizontal circular motion is summarised as
+
+\begin{center}\boxed{\sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)} \le
+|v| \le
+\sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)}
+}\end{center}
+
+
+or, dividing out $\cos\theta$ to involve $\tan\theta$ only:
+\begin{center}\boxed{\sqrt{rg\left(\frac{\tan\theta + \mu}{1 - \mu\tan\theta}\right)} \le
+|v| \le
+\sqrt{rg\left(\frac{\tan\theta - \mu}{1 + \mu\tan\theta}\right)}
+}\end{center}
+
+
+\section{New Business -- Lightnight McQuation}
+
+
+\end{document}
