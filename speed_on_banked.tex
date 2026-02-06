@@ -4,6 +4,11 @@
 \usepackage[margin=1in]{geometry}
 
 
+
+\usetikzlibrary{calc}
+
+
+\setlength{\parskip}{4pt}
 \title{Cars 4 -- Lightnight McQuation}
 \author{Rhitt C}
 \date{Feb 2026}
@@ -34,7 +39,48 @@ Note to self: learn simulink and experiment further with simulations
 The first constraint is that the car travels in a purely horizontal plane 
   i.e. there is no vertical movement and so net vertical force on the car is $\vec{0}$.
 
-For ease of calculation, we deal with both friction down the slope and up the slope together using $(\pm)$ for its components, taking care to use $(\mp)$ where appropriate to maintain consistency of signs.
+For ease of calculation, we deal with both friction down the slope and up the slope together using $(\pm)$ for its components, taking care to use $(\mp)$ where appropriate to maintain consistency of signs. Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in ($\mp$)) is for friction down the slope and vice versa.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    \pgfmathsetmacro{\radius}{2}
+    \pgfmathsetmacro{\g}{9.81}
+    \pgfmathsetmacro{\mass}{0.1}
+    \pgfmathsetmacro{\incline}{45}
+    \pgfmathsetmacro{\fric}{0.3}
+    \pgfmathsetmacro{\speed}{sqrt(\radius * \g * (  (tan(\incline)+\fric)/(1-\fric*tan(\incline))  ))}
+
+    \draw (0, 0) -- (3, 0) -- (3, 3);
+    \draw (3, 3) -- (0, 0) node[midway, above, sloped, draw, fill=blue!20, minimum size=10pt] (c) {};
+
+
+    \draw[dashed, ->] (5, 1) -- (5, 1.5) node[above, font=\tiny] {$(+)\text{ve }y$};
+    \draw[dashed, ->] (5, 1) -- (4.5, 1) node[left, font=\tiny] {$(+)\text{ve }x$};
+
+
+    
+    \pgfmathsetmacro{\Fg}{\mass * \g}
+    \fill[cyan] (c.center) circle (2pt);
+    \draw[cyan, thick, ->] (c.center) -- ++(0, -\Fg)
+        node[below] {$\vec{F}_g$};
+
+    \pgfmathsetmacro{\FN}{\mass * ((\speed^2 * sin(\incline) / \radius) + (\g * cos(\incline)))}
+    \fill[magenta] (c.south) circle (2pt);
+    \draw[magenta, thick, ->] 
+        (c.south) -- ++({\FN*cos(\incline+90)},{\FN*sin(\incline+90)})
+        node[left] {$\vec F_N$};
+
+    \pgfmathsetmacro{\Ff}{\mass * ((\speed^2 * cos(\incline) / \radius) - (\g * sin(\incline)))}
+    \fill[magenta] (c.south) circle (2pt);
+    \draw[magenta, thick, ->] 
+        (c.south) -- ++({\Ff*cos(\incline+180)},{\Ff*sin(\incline+180)})
+        node[left] {$\vec F_f$};
+\end{tikzpicture}
+\caption{Toy Car on banked track with $m=0.1$, $r=2$, $\theta=45^\circ$, $\mu=0.3$, $g=9.81$ SI units}
+\end{figure}
+
+
 
 Setting the upwards direction as positive, we have the following:
 \begin{align*}
