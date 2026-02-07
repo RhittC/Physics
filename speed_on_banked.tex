@@ -2,10 +2,12 @@
 \usepackage{amsmath}
 \usepackage{tikz}
 \usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{caption}
 
 
 
-\usetikzlibrary{calc}
+\usetikzlibrary{calc, arrows.meta, angles, quotes, decorations.markings}
 
 
 \setlength{\parskip}{4pt}
@@ -213,6 +215,121 @@ or, dividing out $\cos\theta$ to involve $\tan\theta$ only:
 \sqrt{rg\left(\frac{\tan\theta + \mu}{1 - \mu\tan\theta}\right)}
 }\end{center}
 
+\subsection{Very Elegant and Concise Geometric Derivation}
+
+This derivation circumvents all the algebra in the last 2 subsections.
+
+\begin{figure}[h]
+\centering
+    \begin{minipage}{0.5\textwidth}
+    \centering
+        \begin{tikzpicture}[
+            mid arrow/.style={
+                postaction={decorate, decoration={
+                    markings,
+                    mark=at position 0.5 with {\arrow{>}}
+                }}
+            },
+            resultant/.style={dashed, ->-}
+        ]
+
+            \pgfmathsetmacro{\radius}{2}
+            \pgfmathsetmacro{\g}{9.81}
+            \pgfmathsetmacro{\mass}{0.15}
+            \pgfmathsetmacro{\incline}{60}
+            \pgfmathsetmacro{\fric}{0.3}
+            \pgfmathsetmacro{\speed}{sqrt(\radius * \g * ( (tan(\incline)+\fric)/(1-\fric*tan(\incline)) ))}
+
+            \pgfmathsetmacro{\Fg}{\mass * \g}
+            \pgfmathsetmacro{\FN}{\mass * ((\speed^2 * sin(\incline) / \radius) + (\g * cos(\incline)))}
+            \pgfmathsetmacro{\Ff}{\mass * ((\speed^2 * cos(\incline) / \radius) - (\g * sin(\incline)))}
+
+            \coordinate (O) at (0,0);
+            \draw[mid arrow, cyan] (O) -- ++(0, -\Fg) coordinate (A) node[midway, right] {$\vec{F}_g$};
+            \draw[mid arrow, magenta] (A) -- ++({90+\incline}:\FN) coordinate (B) node[midway, above] {$\vec{F}_N$};
+            \draw[mid arrow, magenta] (B) -- ++({180+\incline}:\Ff) coordinate (C) node[midway, left] {$\vec{F}_f\le\mu F_N$};
+            \draw[mid arrow, dashed, magenta] (A) -- (C) node[midway, below] {$\vec{F}_f+\vec{F}_N$};
+            \draw[mid arrow, dashed] (O) -- (C) node[midway, below left, font=\small] {$\sum\vec{F}$};
+
+            \pic [draw, "$\theta$", angle radius=1.0cm] {angle = O--A--B};
+            \pic [draw, "$\alpha$", angle radius=1.0cm, magenta] {angle = B--A--C};
+            \pic [draw, angle radius=0.3cm, cyan] {right angle = C--O--A};
+            \pic [draw, angle radius=0.3cm, magenta] {right angle = A--B--C};
+
+            \node[above right] at (O) {$O$};
+            \node[below right] at (A) {$A$};
+            \node[above left] at (B) {$B$};
+            \node[below left] at (C) {$C$};
+
+        \end{tikzpicture}
+        \caption*{Case 1}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+        \begin{tikzpicture}[
+            mid arrow/.style={
+                postaction={decorate, decoration={
+                    markings,
+                    mark=at position 0.5 with {\arrow{>}}
+                }}
+            },
+            resultant/.style={dashed, ->-}
+        ]
+
+            \pgfmathsetmacro{\radius}{2}
+            \pgfmathsetmacro{\g}{9.81}
+            \pgfmathsetmacro{\mass}{0.4}
+            \pgfmathsetmacro{\incline}{60}
+            \pgfmathsetmacro{\fric}{0.3}
+            \pgfmathsetmacro{\speed}{sqrt(\radius * \g * ( (tan(\incline)-\fric)/(1+\fric*tan(\incline)) ))}
+
+            \pgfmathsetmacro{\Fg}{\mass * \g}
+            \pgfmathsetmacro{\FN}{\mass * ((\speed^2 * sin(\incline) / \radius) + (\g * cos(\incline)))}
+            \pgfmathsetmacro{\Ff}{\mass * ((\speed^2 * cos(\incline) / \radius) - (\g * sin(\incline)))}
+
+            \coordinate (O) at (0,0);
+            \draw[mid arrow, cyan] (O) -- ++(0, -\Fg) coordinate (A) node[midway, right] {$\vec{F}_g$};
+            \draw[mid arrow, magenta] (A) -- ++({90+\incline}:\FN) coordinate (B) node[midway, above] {$\vec{F}_N$};
+            \draw[mid arrow, magenta] (B) -- ++({180+\incline}:\Ff) coordinate (C) node[midway, left] {$\vec{F}_f\le\mu F_N$};
+            \draw[mid arrow, dashed, magenta] (A) -- (C) node[midway, above right] {$\vec{F}_f+\vec{F}_N$};
+            \draw[mid arrow, dashed] (O) -- (C) node[midway, below] {$\sum\vec{F}$};
+
+            \pic [draw, "$\theta$", angle radius=1.5cm] {angle = O--A--B};
+            \pic [draw, "$\alpha$", angle radius=1.0cm, magenta] {angle = C--A--B};
+            \pic [draw, angle radius=0.3cm, cyan] {right angle = C--O--A};
+            \pic [draw, angle radius=0.3cm, magenta] {right angle = A--B--C};
+
+
+            \node[above right] at (O) {$O$};
+            \node[below right] at (A) {$A$};
+            \node[below left] at (B) {$B$};
+            \node[above left] at (C) {$C$};
+        \end{tikzpicture}
+        \caption*{Case 2}
+    \end{minipage}
+\end{figure}
+
+As before, we combine the two cases in our calculations using ($\pm$). From the diagrams, we have:
+\begin{align*}
+    \tan(\theta\pm\alpha) &= \frac{|\sum\vec{F}|}{|F_g|} \qquad\qquad\because \triangle OAC \\ 
+    \left|\sum \vec{F}\right| &= |F_g| \tan(\theta\pm\alpha) \\
+    m\frac{v^2}{r}&=mg\tan(\theta\pm\alpha) \\ 
+    \therefore |v| &= \sqrt{rg\tan(\theta\pm\alpha)}
+\end{align*}
+
+We now find the range of values for $\alpha$, which doesn't depend on the case:
+
+\begin{align*}
+    \tan\alpha &= \frac{|F|_f}{|F_N|} \\
+    &\le \frac{\mu|F_N|}{|F_N|} \\ 
+    &\le \mu \\ 
+    \therefore 0\le\alpha &\le \arctan\mu
+\end{align*}
+
+When $\alpha$ is at max, $\tan(\theta+\alpha)$ is at max and $\tan(\theta-\alpha)$ is at min. Thus, we conclude:
+
+\begin{center}
+\boxed{\sqrt{rg\tan(\theta-\arctan\mu)}\le|v|\le\sqrt{rg\tan(\theta+\arctan\mu)}}
+\end{center}
 
 \section{New Business -- Lightnight McQuation}
 
