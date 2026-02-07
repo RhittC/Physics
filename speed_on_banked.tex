@@ -39,7 +39,7 @@ The first constraint is that the car travels in a purely horizontal plane
 
 For ease of calculation, we deal with both friction down the slope (\textbf{Case 1}) and up the slope (\textbf{Case 2}) at once using ($\pm$) and ($\mp$).
 
-Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in ($\mp$)) is for Case 1 and the sign on bottom for Case 2.
+Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in ($\mp$)) is for \textbf{Case 1} and the sign on the bottom is for \textbf{Case 2}.
 
 \begin{figure}[h]
 \centering
@@ -51,7 +51,7 @@ Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in
     \pgfmathsetmacro{\fric}{0.3}
     \pgfmathsetmacro{\speed}{sqrt(\radius * \g * (  (tan(\incline)+\fric)/(1-\fric*tan(\incline))  ))}
 
-    \draw (0, 0) -- (4, 0) -- (4, 3);
+    \draw (0, 0) -- (4, 0) node[midway, below] {Case 1} -- (4, 3);
     \draw (4, 3) -- (0, 0) node[midway, above, sloped, draw, fill=blue!20, minimum size=10pt] (c) {};
 
 
@@ -69,13 +69,39 @@ Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in
     \fill[magenta] (c.south) circle (2pt);
     \draw[magenta, thick, ->] 
         (c.south) -- ++({\FN*cos(\incline+90)},{\FN*sin(\incline+90)})
-        node[left] {$\vec F_N$};
+        node[above left] {$\vec F_N$};
 
     \pgfmathsetmacro{\Ff}{\mass * ((\speed^2 * cos(\incline) / \radius) - (\g * sin(\incline)))}
     \fill[magenta] (c.south) circle (2pt);
     \draw[magenta, thick, ->] 
         (c.south) -- ++({\Ff*cos(\incline+180)},{\Ff*sin(\incline+180)})
-        node[left] {$\vec F_f$};
+        node[above left] {$\vec F_f$};
+
+
+
+
+    \pgfmathsetmacro{\speedd}{sqrt(\radius * \g * (  (tan(\incline)-\fric)/(1+\fric*tan(\incline))  ))}
+
+
+    \draw (9, 0) -- (13, 0) node[below, midway] {Case 2} -- (13, 3);
+    \draw (13, 3) -- (9, 0) node[midway, above, sloped, draw, fill=blue!20, minimum size=10pt] (s) {};
+
+
+    \fill[cyan] (s.center) circle (2pt);
+    \draw[cyan, thick, ->] (s.center) -- ++(0, -\Fg)
+        node[below] {$\vec{F}_g$};
+
+    \pgfmathsetmacro{\FNN}{\mass * ((\speedd^2 * sin(\incline) / \radius) + (\g * cos(\incline)))}
+    \fill[magenta] (s.south) circle (2pt);
+    \draw[magenta, thick, ->] 
+        (s.south) -- ++({\FNN*cos(\incline+90)},{\FNN*sin(\incline+90)})
+        node[above left] {$\vec F_{N}$};
+
+    \pgfmathsetmacro{\Fff}{\mass * ((\speedd^2 * cos(\incline) / \radius) - (\g * sin(\incline)))}
+    \fill[magenta] (s.south) circle (2pt);
+    \draw[magenta, thick, ->] 
+        (s.south) -- ++({\Fff*cos(\incline+180)},{\Fff*sin(\incline+180)})
+        node[above] {$\vec F_f$};
 \end{tikzpicture}
 \caption{Toy Car on banked track with $m=0.1$, $r=2$, $\theta=\arctan\left(\frac{3}{4}\right)$, $\mu=0.3$, $g=9.81$ SI units}
 \end{figure}
@@ -136,15 +162,16 @@ Summarising our results thus far, we have,
 and splitting the answer for friction into the two cases:
 
 \begin{center}
-\boxed{\vec{F_f} = m\left( \frac{v^2}{r} \cos\theta - g\sin\theta\right)\text{ down the slope }\qquad\text{or}\qquad \vec{F}_f = m\left( g\sin\theta - \frac{v^2}{r} \cos\theta\right)\text{ up the slope}}
+\boxed{\vec{F}_{f\textbf{(1)}} = m\left( \frac{v^2}{r} \cos\theta - g\sin\theta\right)\text{ down the slope }\qquad\text{or}\qquad \vec{F}_{f\textbf{(2)}} = m\left( g\sin\theta - \frac{v^2}{r} \cos\theta\right)\text{ up the slope}}
 \end{center}
 
 \subsection{Deriving Range of Speeds}
 
-We now wish to find the maximum value of $|v|$ that meets our constraints for horizontal circular motion. This occurs when $F_f$ is at its maximum down the slope (i.e. ($\pm$) replaced with ($+$)), as this means $F_f$ has a maximal centre-seeking component, and so does $F_N$ as it increases to balance out both friction and gravity. Thus, they both contribute as much as possible to the centripetal force. Hence, we have:
+We now wish to find the maximum value of $|v|$ that meets our constraints for horizontal circular motion. This occurs in \textbf{Case 1} with maximal $|F_f|$, as $F_f$ has a maximal centre-seeking component, and so does $F_N$ as it increases to balance out both friction and gravity.
+Thus, they both contribute as much as possible to the centripetal force. Hence, we have:
 
 \begin{align*}
-|F_f|_{(+)} &\le \mu |F_N|\\
+|F_{f\textbf{(1)}}| &\le \mu |F_N|\\
 m\left(\frac{v^2}{r}\cos\theta - g \sin\theta\right)
 &\le \mu m \left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
 \frac{v^2}{r}\cos\theta - g \sin\theta
@@ -162,28 +189,27 @@ Both consequences minimise centripetal force and thus speed as required.
 Thus,
 
 \begin{align*}
-|F_f|_{(-)} &\le -\mu |F_N|\\
--m\left(\frac{v^2}{r}\cos\theta - g \sin\theta\right)
+|F_{f\textbf{(2)}}| &\le \mu |F_N|\\
+m\left(g\sin\theta-\frac{v^2}{r}\cos\theta\right)
     &\le \mu m\left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
-\frac{v^2}{r} \left(\cos\theta + \mu\sin\theta\right)
-&\ge  g (\sin\theta - \mu\cos\theta)\\
+g (\sin\theta - \mu\cos\theta)
+&\le \frac{v^2}{r} \left(\cos\theta + \mu\sin\theta\right)\\
 |v| &\ge
 \sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)}
 \end{align*}
 
-Therefore, as static friction can take any magnitude up to the threshold necessary to maintain our first constraint,
-we have the full range of speeds for which static friction and the normal force can work to ensure there is horizontal circular motion:
+Thus we have the full range of speeds for which static friction and the normal force can work to ensure there is horizontal circular motion:
 
-\begin{center}\boxed{\sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)} \le
+\begin{center}\boxed{\sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)} \le
 |v| \le
-\sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)}
+\sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)}
 }\end{center}
 
 
 or, dividing out $\cos\theta$ to involve $\tan\theta$ only:
-\begin{center}\boxed{\sqrt{rg\left(\frac{\tan\theta + \mu}{1 - \mu\tan\theta}\right)} \le
+\begin{center}\boxed{\sqrt{rg\left(\frac{\tan\theta - \mu}{1 + \mu\tan\theta}\right)} \le
 |v| \le
-\sqrt{rg\left(\frac{\tan\theta - \mu}{1 + \mu\tan\theta}\right)}
+\sqrt{rg\left(\frac{\tan\theta + \mu}{1 - \mu\tan\theta}\right)}
 }\end{center}
 
 
