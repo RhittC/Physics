@@ -34,8 +34,6 @@ Note to self: learn simulink and experiment further with simulations
 \section{Second Paradigm -- Banked Tracks}
 
 \subsection{Deriving a general formula for Friction and Normal forces}
-The first constraint is that the car travels in a purely horizontal plane 
-  i.e. there is no vertical movement and so net vertical force on the car is $\vec{0}$.
 
 For ease of calculation, we deal with both friction down the slope (\textbf{Case 1}) and up the slope (\textbf{Case 2}) at once using ($\pm$) and ($\mp$).
 
@@ -109,6 +107,9 @@ Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in
 \pagebreak
 
 
+The first constraint is that the car travels in a purely horizontal plane 
+  i.e. there is no vertical movement and so net vertical force on the car is $\vec{0}$.
+
 Setting the upwards direction as positive, we have the following:
 \begin{align*}
     \sum \vec{F}_y &= \vec{0} \\
@@ -156,7 +157,7 @@ This gives us the normal force! Now, plugging into (E1), we find the friction fo
 Summarising our results thus far, we have,
 
 \begin{center}
-\boxed{\vec{F_N} = m\left(\frac{v^2}{r}\sin\theta + g\cos\theta\right)\text{ up perpendicular to slope}}
+\boxed{\vec{F}_N = m\left(\frac{v^2}{r}\sin\theta + g\cos\theta\right)\text{ up perpendicular to slope}}
 \end{center}
 
 and splitting the answer for friction into the two cases:
