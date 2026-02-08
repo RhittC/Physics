@@ -7,7 +7,7 @@
 
 
 
-\usetikzlibrary{calc, arrows.meta, angles, quotes, decorations.markings}
+\usetikzlibrary{calc, arrows.meta, angles, quotes, decorations.markings, intersections}
 
 
 \setlength{\parskip}{4pt}
@@ -108,6 +108,145 @@ Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in
 
 \pagebreak
 
+\subsubsection{Geometry}
+
+
+We add the force vectors tip to tail as follows (using different parameters for better illustration):
+
+\begin{figure}[h]
+\centering
+    \begin{minipage}{0.45\textwidth}
+    \centering
+        \begin{tikzpicture}[
+            mid arrow/.style={
+                postaction={decorate, decoration={
+                    markings,
+                    mark=at position 0.5 with {\arrow{>}}
+                }}
+            },
+            resultant/.style={dashed, ->-}
+        ]
+
+            \pgfmathsetmacro{\radius}{2}
+            \pgfmathsetmacro{\g}{9.81}
+            \pgfmathsetmacro{\mass}{0.15}
+            \pgfmathsetmacro{\incline}{60}
+            \pgfmathsetmacro{\fric}{0.3}
+            \pgfmathsetmacro{\speed}{sqrt(\radius * \g * ( (tan(\incline)+\fric)/(1-\fric*tan(\incline)) ))}
+
+            \pgfmathsetmacro{\Fg}{\mass * \g}
+            \pgfmathsetmacro{\FN}{\mass * ((\speed^2 * sin(\incline) / \radius) + (\g * cos(\incline)))}
+            \pgfmathsetmacro{\Ff}{\mass * ((\speed^2 * cos(\incline) / \radius) - (\g * sin(\incline)))}
+
+            \coordinate (O) at (0,0);
+            \draw[mid arrow, cyan] (O) -- ++(0, -\Fg) coordinate (A) node[midway, right] {$\vec{F}_g=mg$};
+            \draw[->, magenta, name path=lineFN] (A) -- ++({90+\incline}:\FN) coordinate (B) node[midway, above] {$\vec{F}_N$};
+            \draw[mid arrow, magenta] (B) -- ++({180+\incline}:\Ff) coordinate (C) node[midway, left] {$\vec{F}_f$};
+            \draw[mid arrow, dashed, name path=lineFNet] (O) -- (C) node[, midway, below left, font=\small] {$\sum\vec{F}$};
+
+
+            \fill [name intersections={of=lineFN and lineFNet, by=P}] (P) circle (1.5pt) node[below] {$P$};
+
+            \pic [draw, "$\theta$", angle radius=1.0cm] {angle = O--A--B};
+            \pic [draw, "$\theta$", angle radius=0.8cm] {angle = O--C--B};
+            \pic [draw, angle radius=0.3cm, cyan] {right angle = C--O--A};
+            \pic [draw, angle radius=0.3cm, magenta] {right angle = A--B--C};
+
+            \node[above right] at (O) {$O$};
+            \node[below right] at (A) {$A$};
+            \node[above left] at (B) {$B$};
+            \node[below left] at (C) {$C$};
+
+        \end{tikzpicture}
+        \caption*{Case 1}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \begin{tikzpicture}[
+            mid arrow/.style={
+                postaction={decorate, decoration={
+                    markings,
+                    mark=at position 0.5 with {\arrow{>}}
+                }}
+            },
+            resultant/.style={dashed, ->-}
+        ]
+
+            \pgfmathsetmacro{\radius}{2}
+            \pgfmathsetmacro{\g}{9.81}
+            \pgfmathsetmacro{\mass}{0.3}
+            \pgfmathsetmacro{\incline}{60}
+            \pgfmathsetmacro{\fric}{0.3}
+            \pgfmathsetmacro{\speed}{sqrt(\radius * \g * ( (tan(\incline)-\fric)/(1+\fric*tan(\incline)) ))}
+
+            \pgfmathsetmacro{\Fg}{\mass * \g}
+            \pgfmathsetmacro{\FN}{\mass * ((\speed^2 * sin(\incline) / \radius) + (\g * cos(\incline)))}
+            \pgfmathsetmacro{\Ff}{\mass * ((\speed^2 * cos(\incline) / \radius) - (\g * sin(\incline)))}
+
+            \coordinate (O) at (0,0);
+            \draw[mid arrow, cyan] (O) -- ++(0, -\Fg) coordinate (A) node[midway, right] {$\vec{F}_g=mg$};
+            \draw[mid arrow, magenta] (A) -- ++({90+\incline}:\FN) coordinate (B) node[midway, above] {$\vec{F}_N$};
+            \draw[mid arrow, magenta] (B) -- ++({180+\incline}:\Ff) coordinate (C) node[midway, left] {$\vec{F}_f$};
+            \draw[->, dashed] (O) -- (C) node[midway, below] {$\sum\vec{F}$};
+
+
+            \path[name path=extFN] (A) -- ($(A)!2!(B)$);
+            \path[name path=extFNet] (O) -- ($(O)!2!(C)$);
+
+            \path[name intersections={of=extFN and extFNet, by=P}];
+
+            \draw[dotted, red] (B) -- (P);
+            \draw[dotted] (C) -- (P);
+            \fill (P) circle (1pt) node[left] {$P$};
+
+
+
+
+            \pic [draw, "$\theta$", angle radius=1.2cm] {angle = O--A--B};
+            \pic [draw, angle radius=0.3cm, cyan] {right angle = C--O--A};
+            \pic [draw, angle radius=0.3cm, magenta] {right angle = A--B--C};
+
+
+            \node[above right] at (O) {$O$};
+            \node[below right] at (A) {$A$};
+            \node[below left] at (B) {$B$};
+            \node[above left] at (C) {$C$};
+        \end{tikzpicture}
+        \caption*{Case 2}
+    \end{minipage}
+\end{figure}
+
+For horizontal circular motion we require $\sum\vec{F}=F_{cp}=m\left(\frac{v^2}{r}\right)$\textit{ horizontally in towards center of velodrome}. Hence, from the diagrams:
+\begin{align*}
+    \sum\vec{F} &= OP \pm PC\\
+    &= (OA\tan\theta)\pm PC\qquad\because\triangle OAP \\
+    \implies m \frac{v^2}{r} &= mg\tan\theta \pm PC \\ 
+    \therefore PC &= \pm m\left(\frac{v^2}{r}-g\tan\theta\right) \tag{E1.1.1}
+\end{align*}
+
+This $PC$ in $\triangle PBC$ now gives us the vital constraint on how far $\vec{F}_N$ and $\vec{F}_f$ can extend, and so we can now solve for them explicitly:
+\begin{alignat*}{2}
+    |F_N| &= AP \pm PB   \hspace{5em}   &     |F_f| &= BC \\ 
+    &= \left(\frac{OA}{\cos\theta}\right) \pm PC\sin\theta\quad\quad\because\triangle OAP, \triangle PBC \hspace{5em} &  &= PC \cos\theta \quad\because\triangle PBC \\
+    &= \frac{mg}{\cos\theta}+m\left(\frac{v^2}{r}\sin\theta-g\frac{\sin^2\theta}{\cos\theta}\right)\quad\because\text{(E1.1.1)} & &=\pm m\left(\frac{v^2}{r}\cos\theta-g\sin\theta\right)\quad\because\text{E1.1.1} \\ 
+    &= m\left(\frac{v^2}{r}\sin\theta+g\frac{1-\sin^2\theta}{\cos\theta}\right) & & \\ 
+    &= m \left(\frac{v^2}{r}\sin\theta + g\cos\theta\right)\quad \because\sin^2\theta+\cos^2\theta=1
+\end{alignat*}
+
+
+Thus, we conclude:
+
+\begin{center}
+\boxed{\vec{F}_N = m\left(\frac{v^2}{r}\sin\theta+g\cos\theta\right)\text{ up perpendicular to slope}}
+\end{center}
+
+and splitting the answer for friction into the two cases:
+
+\begin{center}
+\boxed{\vec{F}_{f\textbf{(1)}} = m\left( \frac{v^2}{r} \cos\theta - g\sin\theta\right)\text{ down the slope }\qquad\text{or}\qquad \vec{F}_{f\textbf{(2)}} = m\left( g\sin\theta - \frac{v^2}{r} \cos\theta\right)\text{ up the slope}}
+\end{center}
+
+
+\subsubsection{Longer Algebra}
 
 The first constraint is that the car travels in a purely horizontal plane 
   i.e. there is no vertical movement and so net vertical force on the car is $\vec{0}$.
