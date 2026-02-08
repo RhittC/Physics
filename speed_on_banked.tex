@@ -35,7 +35,6 @@ Note to self: learn simulink and experiment further with simulations
 
 \section{Second Paradigm -- Banked Tracks}
 
-\subsection{Deriving a general formula for Friction and Normal forces}
 
 For ease of calculation, we deal with both friction down the slope (\textbf{Case 1}) and up the slope (\textbf{Case 2}) at once using ($\pm$) and ($\mp$).
 
@@ -108,7 +107,8 @@ Throughout the calculations, the sign on top (i.e. ($+$) in ($\pm$) and ($-$) in
 
 \pagebreak
 
-\subsubsection{Geometry}
+\subsection{Deriving a general formula for Friction and Normal forces}
+\subsubsection{Geometric Approach}
 
 
 We add the force vectors tip to tail as follows (using different parameters for better illustration):
@@ -185,7 +185,7 @@ We add the force vectors tip to tail as follows (using different parameters for 
             \coordinate (O) at (0,0);
             \draw[mid arrow, cyan] (O) -- ++(0, -\Fg) coordinate (A) node[midway, right] {$\vec{F}_g=mg$};
             \draw[mid arrow, magenta] (A) -- ++({90+\incline}:\FN) coordinate (B) node[midway, above] {$\vec{F}_N$};
-            \draw[mid arrow, magenta] (B) -- ++({180+\incline}:\Ff) coordinate (C) node[midway, left] {$\vec{F}_f$};
+            \draw[mid arrow, magenta] (B) -- ++({180+\incline}:\Ff) coordinate (C) node[midway, right] {$\vec{F}_f$};
             \draw[->, dashed] (O) -- (C) node[midway, below] {$\sum\vec{F}$};
 
 
@@ -202,6 +202,7 @@ We add the force vectors tip to tail as follows (using different parameters for 
 
 
             \pic [draw, "$\theta$", angle radius=1.2cm] {angle = O--A--B};
+            \pic [draw, "$\theta$", angle radius=0.8cm] {angle = P--C--B};
             \pic [draw, angle radius=0.3cm, cyan] {right angle = C--O--A};
             \pic [draw, angle radius=0.3cm, magenta] {right angle = A--B--C};
 
@@ -217,7 +218,7 @@ We add the force vectors tip to tail as follows (using different parameters for 
 
 For horizontal circular motion we require $\sum\vec{F}=F_{cp}=m\left(\frac{v^2}{r}\right)$\textit{ horizontally in towards center of velodrome}. Hence, from the diagrams:
 \begin{align*}
-    \sum\vec{F} &= OP \pm PC\\
+    \left| \sum\vec{F}\right| &= OP \pm PC\\
     &= (OA\tan\theta)\pm PC\qquad\because\triangle OAP \\
     \implies m \frac{v^2}{r} &= mg\tan\theta \pm PC \\ 
     \therefore PC &= \pm m\left(\frac{v^2}{r}-g\tan\theta\right) \tag{E1.1.1}
@@ -246,7 +247,7 @@ and splitting the answer for friction into the two cases:
 \end{center}
 
 
-\subsubsection{Longer Algebra}
+\subsubsection{Longer Algebraic Approach}
 
 The first constraint is that the car travels in a purely horizontal plane 
   i.e. there is no vertical movement and so net vertical force on the car is $\vec{0}$.
@@ -309,54 +310,9 @@ and splitting the answer for friction into the two cases:
 
 \subsection{Deriving Range of Speeds}
 
-We now wish to find the maximum value of $|v|$ that meets our constraints for horizontal circular motion. This occurs in \textbf{Case 1} with maximal $|F_f|$, as $F_f$ has a maximal centre-seeking component, and so does $F_N$ as it increases to balance out both friction and gravity.
-Thus, they both contribute as much as possible to the centripetal force. Hence, we have:
+\subsubsection{Geometric Approach}
 
-\begin{align*}
-|F_{f\textbf{(1)}}| &\le \mu |F_N|\\
-m\left(\frac{v^2}{r}\cos\theta - g \sin\theta\right)
-&\le \mu m \left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
-\frac{v^2}{r}\cos\theta - g \sin\theta
-&\le \mu  \left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
-\frac{v^2}{r}\left(\cos\theta - \mu\sin\theta\right)
-&\le g (\sin\theta + \mu\cos\theta)\\
-\frac{v^2}{r}&\le g\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\\
-|v|&\le \sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)}
-\end{align*}
-
-Similarly, to minimise $|v|$, we want $F_f$ to be maximally directed up the slope (i.e. replace ($\pm$) with ($-$)). 
-The primary reason is that this leads to a maximal component away from the center of the velodrome. The vertical component also ``lessens the burden'' of $F_N$ in opposing the constant $F_g$ downwards, and thereby weakens $F_N$ alongside its center-seeking component to a min.
-Both consequences minimise centripetal force and thus speed as required.
-
-Thus,
-
-\begin{align*}
-|F_{f\textbf{(2)}}| &\le \mu |F_N|\\
-m\left(g\sin\theta-\frac{v^2}{r}\cos\theta\right)
-    &\le \mu m\left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
-g (\sin\theta - \mu\cos\theta)
-&\le \frac{v^2}{r} \left(\cos\theta + \mu\sin\theta\right)\\
-|v| &\ge
-\sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)}
-\end{align*}
-
-Thus we have the full range of speeds for which static friction and the normal force can work to ensure there is horizontal circular motion:
-
-\begin{center}\boxed{\sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)} \le
-|v| \le
-\sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)}
-}\end{center}
-
-
-or, dividing out $\cos\theta$ to involve $\tan\theta$ only:
-\begin{center}\boxed{\sqrt{rg\left(\frac{\tan\theta - \mu}{1 + \mu\tan\theta}\right)} \le
-|v| \le
-\sqrt{rg\left(\frac{\tan\theta + \mu}{1 - \mu\tan\theta}\right)}
-}\end{center}
-
-\subsection{Very Elegant and Concise Geometric Derivation}
-
-This derivation circumvents all the algebra in the last 2 subsections.
+By noting that maximal static friction is proportional to the normal force, we can obtain the range of speeds explicitly.
 
 \begin{figure}[h]
 \centering
@@ -451,11 +407,11 @@ As before, we combine the two cases in our calculations using ($\pm$). From the 
 \begin{align*}
     \tan(\theta\pm\alpha) &= \frac{|\sum\vec{F}|}{|F_g|} \qquad\qquad\because \triangle OAC \\ 
     \left|\sum \vec{F}\right| &= |F_g| \tan(\theta\pm\alpha) \\
-    m\frac{v^2}{r}&=mg\tan(\theta\pm\alpha) \\ 
-    \therefore |v| &= \sqrt{rg\tan(\theta\pm\alpha)}
+    m\frac{v^2}{r}&=mg\cdot\tan(\theta\pm\alpha) \\ 
+    \therefore |v| &= \sqrt{rg\cdot\tan(\theta\pm\alpha)}
 \end{align*}
 
-We now find the range of values for $\alpha$, which doesn't depend on the case:
+We now find the range of values for $\alpha$, which doesn't depend on the case so there is no $(\pm)$:
 
 \begin{align*}
     \tan\alpha &= \frac{|F|_f}{|F_N|} \\
@@ -467,8 +423,70 @@ We now find the range of values for $\alpha$, which doesn't depend on the case:
 When $\alpha$ is at max, $\tan(\theta+\alpha)$ is at max and $\tan(\theta-\alpha)$ is at min. Thus, we conclude:
 
 \begin{center}
-\boxed{\sqrt{rg\tan(\theta-\arctan\mu)}\le|v|\le\sqrt{rg\tan(\theta+\arctan\mu)}}
+\boxed{\sqrt{rg\cdot\tan(\theta-\arctan\mu)}\le|v|\le\sqrt{rg\cdot\tan(\theta+\arctan\mu)}}
 \end{center}
+
+
+
+\subsubsection{Algebraic Approach}
+
+This is significantly longer than the geometric approach and requires some more advanced knowledge to simplify the answer fully.
+
+We now wish to find the maximum value of $|v|$ that meets our constraints for horizontal circular motion. This occurs in \textbf{Case 1} with maximal $|F_f|$, as $F_f$ has a maximal centre-seeking component, and so does $F_N$ as it increases to balance out both friction and gravity.
+Thus, they both contribute as much as possible to the centripetal force. Hence, we have:
+
+\begin{align*}
+|F_{f\textbf{(1)}}| &\le \mu |F_N|\\
+m\left(\frac{v^2}{r}\cos\theta - g \sin\theta\right)
+&\le \mu m \left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
+\frac{v^2}{r}\cos\theta - g \sin\theta
+&\le \mu  \left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
+\frac{v^2}{r}\left(\cos\theta - \mu\sin\theta\right)
+&\le g (\sin\theta + \mu\cos\theta)\\
+\frac{v^2}{r}&\le g\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\\
+|v|&\le \sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)}
+\end{align*}
+
+Similarly, to minimise $|v|$, we want $F_f$ to be maximally directed up the slope (i.e. replace ($\pm$) with ($-$)). 
+The primary reason is that this leads to a maximal component away from the center of the velodrome. The vertical component also ``lessens the burden'' of $F_N$ in opposing the constant $F_g$ downwards, and thereby weakens $F_N$ alongside its center-seeking component to a min.
+Both consequences minimise centripetal force and thus speed as required.
+
+Thus,
+
+\begin{align*}
+|F_{f\textbf{(2)}}| &\le \mu |F_N|\\
+m\left(g\sin\theta-\frac{v^2}{r}\cos\theta\right)
+    &\le \mu m\left(\frac{v^2}{r}\sin\theta + g \cos\theta\right)\\
+g (\sin\theta - \mu\cos\theta)
+&\le \frac{v^2}{r} \left(\cos\theta + \mu\sin\theta\right)\\
+|v| &\ge
+\sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)}
+\end{align*}
+
+Thus we have the full range of speeds for which static friction and the normal force can work to ensure there is horizontal circular motion:
+
+\begin{center}\boxed{\sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)} \le
+|v| \le
+\sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)}
+}\end{center}
+
+
+Simplification requires knowledge of sum of sinusoidals with same frequency:
+
+\begin{align*}
+    \sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)} &\le
+        |v| \le
+        \sqrt{rg\left(\frac{\sin\theta + \mu\cos\theta}{\cos\theta - \mu\sin\theta}\right)} \\
+    \sqrt{rg\left(\frac{\left(\sqrt{1+\mu^2}\right)\sin(\theta-\arctan\mu)}{\left(\sqrt{1+\mu^2}\right)\cos(\theta-\arctan\mu)}\right)} &\le
+        |v| \le
+        \sqrt{rg\left(\frac{\left(\sqrt{1+\mu^2}\right)\sin(\theta+\arctan\mu)}{\left(\sqrt{1+\mu^2}\right)\cos(\theta+\arctan\mu)}\right)}
+\end{align*}
+
+\begin{center}$\therefore\;$\boxed{\sqrt{rg\cdot\tan(\theta-\arctan\mu)} \le
+|v| \le
+\sqrt{rg\cdot\tan(\theta+\arctan\mu)}
+}\end{center}
+
 
 \section{New Business -- Lightnight McQuation}
 
