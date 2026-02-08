@@ -216,7 +216,7 @@ We add the force vectors tip to tail as follows (using different parameters for 
     \end{minipage}
 \end{figure}
 
-For horizontal circular motion we require $\sum\vec{F}=F_{cp}=m\left(\frac{v^2}{r}\right)$\textit{ horizontally in towards center of velodrome}. Hence, from the diagrams:
+For horizontal uniform circular motion we require $\sum\vec{F}=F_{cp}=m\left(\frac{v^2}{r}\right)$\textit{ horizontally in towards center of velodrome}. Hence, from the diagrams:
 \begin{align*}
     \left| \sum\vec{F}\right| &= OP \pm PC\\
     &= (OA\tan\theta)\pm PC\qquad\because\triangle OAP \\
@@ -228,7 +228,7 @@ This $PC$ in $\triangle PBC$ now gives us the vital constraint on how far $\vec{
 \begin{alignat*}{2}
     |F_N| &= AP \pm PB   \hspace{5em}   &     |F_f| &= BC \\ 
     &= \left(\frac{OA}{\cos\theta}\right) \pm PC\sin\theta\quad\quad\because\triangle OAP, \triangle PBC \hspace{5em} &  &= PC \cos\theta \quad\because\triangle PBC \\
-    &= \frac{mg}{\cos\theta}+m\left(\frac{v^2}{r}\sin\theta-g\frac{\sin^2\theta}{\cos\theta}\right)\quad\because\text{(E1.1.1)} & &=\pm m\left(\frac{v^2}{r}\cos\theta-g\sin\theta\right)\quad\because\text{E1.1.1} \\ 
+    &= \frac{mg}{\cos\theta}+m\left(\frac{v^2}{r}\sin\theta-g\frac{\sin^2\theta}{\cos\theta}\right)\quad\because\text{(E1.1.1)} & &=\pm m\left(\frac{v^2}{r}\cos\theta-g\sin\theta\right)\quad\because\text{(E1.1.1)} \\ 
     &= m\left(\frac{v^2}{r}\sin\theta+g\frac{1-\sin^2\theta}{\cos\theta}\right) & & \\ 
     &= m \left(\frac{v^2}{r}\sin\theta + g\cos\theta\right)\quad \because\sin^2\theta+\cos^2\theta=1
 \end{alignat*}
@@ -256,9 +256,9 @@ Setting the upwards direction as positive, we have the following:
 \begin{align*}
     \sum \vec{F}_y &= \vec{0} \\
     \vec{0}&=\vec{F_g} + \vec{F}_{fy} + \vec{F}_{Ny} \\
-    \vec{0}&=-mg \mp |F_f|\sin\theta + |F_N|\cos\theta \tag{E1}\\
-    (\text{E1})\cdot \cos\theta\implies\qquad\qquad 
-        \vec{0} &=-mg\cos\theta \mp |F_f|\sin\theta\cos\theta + |F_N|\cos^2\theta \tag{E2}\\
+    \vec{0}&=-mg \mp |F_f|\sin\theta + |F_N|\cos\theta \tag{E1.2.1}\\
+    (\text{E1.2.1})\cdot \cos\theta\implies\qquad\qquad 
+        \vec{0} &=-mg\cos\theta \mp |F_f|\sin\theta\cos\theta + |F_N|\cos^2\theta \tag{E1.2.2}\\
 \end{align*}
 
 
@@ -269,26 +269,26 @@ Setting the direction in towards the center of the velodrome to be positive, we 
     \sum \vec{F}_x &= +\; m\frac{v^2}{r} \\
     \vec{F}_{fx} + \vec{F}_{Nx}&=m\frac{v^2}{r} \\
     \vec{0}&= m\frac{v^2}{r} - \vec{F}_{fx} - \vec{F}_{Nx} \\
-    \vec{0}&= m\frac{v^2}{r} \mp |F_f|\cos\theta - |F_N|\sin\theta \tag{E3}\\
-    (\text{E3})\cdot \sin\theta\implies\qquad\qquad 
-        \vec{0}&= m\frac{v^2}{r}\sin\theta \mp |F_f|\sin\theta\cos\theta - |F_N|\sin^2\theta \tag{E4}\\
+    \vec{0}&= m\frac{v^2}{r} \mp |F_f|\cos\theta - |F_N|\sin\theta \tag{E1.2.3}\\
+    (\text{E1.2.3})\cdot \sin\theta\implies\qquad\qquad 
+        \vec{0}&= m\frac{v^2}{r}\sin\theta \mp |F_f|\sin\theta\cos\theta - |F_N|\sin^2\theta \tag{E1.2.4}\\
 \end{align*}
 
 
 Now we combine to obtain an equation involving $F_f$ but not $F_N$
 
 \begin{align*}
-    \text{(E4)} - \text{(E2)} \implies \qquad
+    \text{(E1.2.4)} - \text{(E1.2.2)} \implies \qquad
         \vec{0}-\vec{0}  &=  m\frac{v^2}{r}\sin\theta + mg\cos\theta + (\vec{0}) + |F_N|\cdot (-\sin^2\theta - \cos^2\theta) \\ 
         \vec{0} &= m\frac{v^2}{r}\sin\theta + mg\cos\theta + |F_N|\cdot(-1) \\ 
-        |F_N| &= m \left(\frac{v^2}{r} \sin\theta + g\cos\theta \right) \tag{E5}
+        |F_N| &= m \left(\frac{v^2}{r} \sin\theta + g\cos\theta \right) \tag{E1.2.5}
 \end{align*}
 
 
-This gives us the normal force! Now, plugging into (E1), we find the friction force
+This gives us the normal force! Now, plugging into (E1.2.1), we find the friction force
 
 \begin{align*}
-    \text{(E5)}\rightarrow\text{(E1)}\implies\quad\quad
+    \text{(E1.2.5)}\rightarrow\text{(E1.2.1)}\implies\quad\quad
         \vec{0}&=-mg \mp |F_f|\sin\theta + m\left(g\cos\theta + \frac{v^2}{r}\sin\theta\right)\cos\theta \\
         \pm |F_f|\sin\theta  &= m\left(\frac{v^2}{r}\sin\theta\cos\theta + g (-1+\cos^2 \theta)\right) \\
                              &= m\left(\frac{v^2}{r}\sin\theta\cos\theta + g (-\sin^2\theta)\right) \\
@@ -471,7 +471,7 @@ Thus we have the full range of speeds for which static friction and the normal f
 }\end{center}
 
 
-Simplification requires knowledge of sum of sinusoidals with same frequency:
+Simplification requires knowledge of how to sum sinusoidals with same frequency (which is $1$ here):
 
 \begin{align*}
     \sqrt{rg\left(\frac{\sin\theta - \mu\cos\theta}{\cos\theta + \mu\sin\theta}\right)} &\le
